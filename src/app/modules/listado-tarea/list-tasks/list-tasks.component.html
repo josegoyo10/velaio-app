@@ -1,0 +1,32 @@
+<div class="container">
+  <h2>Filtros:</h2>
+  <div class="row">
+    <div class="col">
+      <button (click)="filtrarTareas('todas')" [class.active]="filtroActual === 'todas'">Todas</button>
+    </div>
+    <div class="col">
+      <button (click)="filtrarTareas('completadas')" class="btn btn-primary">Completadas</button>
+    </div>
+    <div class="col">
+      <button (click)="filtrarTareas('pendientes')" class="btn btn-danger">Pendientes</button>
+    </div>
+    <div class="col">
+      <button routerLink="../../" class="btn btn-warning">Regresar</button>
+    </div>
+  </div>
+  <div class="row">
+    {{ this.tareas | json }}
+    <ul>
+      <li *ngFor="let tarea of tareas">
+        <input type="checkbox" [checked]="tarea.completada" (change)="toggleTarea(tarea)" />
+        {{ tarea.nombre }} - {{ tarea.fecha }}
+        <ul class="list-group">
+          <li class="list-group-item" *ngFor="let persona of tarea.personas">
+            {{ persona.nombre }} ({{ persona.edad }} años)
+            Habilidades: {{ persona.habilidades.join(', ') }}
+          </li>
+        </ul>
+      </li>
+    </ul>
+  </div>
+</div>
