@@ -72,20 +72,6 @@ export class TareaService {
   }
 
 
-
-  // obtenerTareas() {
-  //   return this.tasks;
-  // }
-
-  // filtrarTareas(estado: string) {
-  //   if (estado === 'completadas') {
-  //     //return this.tasks.filter(tarea => tarea.completada);
-  //   } else if (estado === 'pendientes') {
-  //     //return this.tasks.filter(tarea => !tarea.completada);
-  //   }
-  //   return this.tasks;
-  // }
-
   getTarea$() {
     return this.tasks;
   }
