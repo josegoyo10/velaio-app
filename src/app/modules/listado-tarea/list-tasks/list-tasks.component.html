@@ -21,9 +21,9 @@
         <input type="checkbox" [checked]="tarea.completada" (change)="toggleTarea(tarea)" />
         {{ tarea.nombre }} - {{ tarea.fecha }}
         <ul class="list-group">
-          <li class="list-group-item" *ngFor="let persona of tarea.personas">
+          <li class="list-group-item" *ngFor="let persona of tarea.persons">
             {{ persona.nombre }} ({{ persona.edad }} años)
-            Habilidades: {{ persona.habilidades.join(', ') }}
+            Habilidades: {{ persona.skills.join(', ') }}
           </li>
         </ul>
       </li>

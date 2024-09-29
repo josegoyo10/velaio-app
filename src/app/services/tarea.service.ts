@@ -20,7 +20,7 @@ export interface Tarea {
 export interface Persona {
   nombre: string
   edad: string
-  habilidades: string[]
+  skills: string[]
 }
 
 @Injectable({
@@ -31,9 +31,6 @@ export class TareaService {
 
   constructor() { }
   private tasks: any[] = [];
-
-
-
 
   addTasks(tarea: Tarea) {
     //console.log("Tarea push:", tarea);
