@@ -1,0 +1,169 @@
+<div class="container">
+  <form [formGroup]="form" (ngSubmit)="savingTask()" class="form">
+    <div class="form-group">
+      <label for="nombre">Nombre de la Tarea</label>
+      <input type="text" class="form-control" formControlName="nombre" />
+      <span *ngIf="submitted && f['nombre'].errors" class="errors">
+        <span
+          *ngIf="f['nombre'].errors['required']"
+          style="color: red; font-size: 12px"
+        >
+          Nombre Tarea es obligatorio.
+        </span>
+      </span>
+    </div>
+    <div class="form-group">
+      <label for="fecha">Fecha Limite</label>
+      <input type="date" class="form-control" formControlName="fecha" #fecha/>
+    </div>
+    <br />
+
+    <div formArrayName="persons">
+      <div
+        *ngFor="let person of persons.controls; let i = index"
+        [formGroupName]="i"
+      >
+        <div class="form-group">
+          <label for="nombre">Nombre Completo:</label>
+          <input
+            [ngClass]="{ 'is-invalid': submitted }"
+            type="text"
+            class="form-control"
+            formControlName="nombre"
+          />
+          <span
+            *ngIf="
+              person.get('nombre')?.hasError('required') &&
+              person.get('nombre')?.touched
+            "
+            style="color: red; font-size: 12px"
+          >
+            El nombre de la persona es obligatorio.
+          </span>
+
+          <div
+            *ngIf="
+              person.get('nombre')?.hasError('minlength') &&
+              person.get('nombre')?.touched
+            "
+            style="color: red; font-size: 12px"
+          >
+            El nombre debe tener al menos 5 caracteres.
+          </div>
+        </div>
+        <div class="form-group">
+          <label for="nombre">Edad</label>
+          <input
+            [ngClass]="{ 'is-invalid': submitted }"
+            type="text"
+            class="form-control"
+            formControlName="edad"
+          />
+
+          <div
+            *ngIf="
+              person.get('edad')?.hasError('required') &&
+              person.get('edad')?.touched
+            "
+            style="color: red; font-size: 12px"
+          >
+            La edad es requerida.
+          </div>
+          <div
+            *ngIf="
+              person.get('edad')?.hasError('min') &&
+              person.get('edad')?.touched
+            "
+          >
+            La edad debe ser mayor a 18 años.
+          </div>
+        </div>
+        <div formArrayName="skills">
+          <div *ngFor="let skill of skills(i).controls; let j = index">
+            <br />
+            <div class="row">
+              <div class="col-sm-6">
+                <input
+                  [formControlName]="j"
+                  type="text"
+                  class="form-control"
+                  placeholder="agregar habilidad"
+                />
+              </div>
+              <div class="col-sm-3">
+                <button
+                  (click)="removeHabilidad(i, j)"
+                  type="button"
+                  class="btn btn-danger"
+                >
+                  Eliminar Habilidad
+                </button>
+              </div>
+              <div class="col-sm-3">
+                <button
+                  (click)="addHabilidad(i)"
+                  type="button"
+                  class="btn btn-success"
+                >
+                  Añadir Habilidad
+                </button>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div
+          *ngIf="
+            person.get('skills')?.invalid &&
+            person.get('skills')?.touched
+          "
+          style="color: red; font-size: 12px"
+        >
+          Debe agregar al menos una habilidad.
+        </div>
+        <div
+          *ngIf="
+            person.get('skills')?.hasError('minlength') &&
+            person.get('skills')?.touched
+          "
+          style="color: red; font-size: 12px"
+        >
+          Debe agregar al menos 3 habilidades.
+        </div>
+        <div
+          *ngIf="
+            person.get('skills')?.hasError('maxlength') &&
+            person.get('skills')?.touched
+          "
+          style="color: red; font-size: 12px"
+        >
+          No puede agregar más de 5 habilidades.
+        </div>
+        <div
+          *ngIf="
+            person.get('skills')?.hasError('pattern') &&
+            person.get('skills')?.touched
+          "
+          style="color: red; font-size: 12px"
+        >
+          Solo puede agregar habilidades en letras.
+        </div>
+      </div>
+      <div
+        *ngIf="persons.invalid && persons.touched"
+        style="color: red; font-size: 12px"
+      >
+        Debe agregar al menos una persona.
+      </div>
+    </div>
+    <br />
+
+    <button (click)="addPerson()" type="button" class="btn btn-success">
+      Agregar Persona
+    </button>
+    &nbsp;&nbsp;
+    <button type="submit" class="btn btn-primary">Guardar Tarea</button>
+    &nbsp;&nbsp;
+    <a routerLink="/listar/tareas" class="btn btn-primary"> Listar Tareas </a>
+  </form>
+</div>
